@@ -47,7 +47,7 @@ class EmotionPredictor:
         try:
             if not os.path.exists(self.model_path):
                 raise FileNotFoundError(
-                    f"\n❌ Error: No se encontró el modelo en '{self.model_path}'\n"
+                    f"\n Error: No se encontró el modelo en '{self.model_path}'\n"
                     f"   Por favor, ejecuta primero 'python main.py' para entrenar el modelo.\n"
                 )
 
@@ -69,8 +69,8 @@ class EmotionPredictor:
             self.emotion_names = self.model_data['emotion_names']
             self.metrics = self.model_data['metrics']
 
-            print(f"✅ Modelo cargado exitosamente!")
-            print(f"\n📊 Información del modelo:")
+            print(f" Modelo cargado exitosamente!")
+            print(f"\n Información del modelo:")
             print(f"   • Nombre: {self.model_data['model_name']}")
             if self.is_ensemble:
                 print(f"   • Tipo: Ensemble (Feature Engineering + Voting Classifier)")
@@ -78,11 +78,11 @@ class EmotionPredictor:
             print(f"   • Precision (Macro): {self.metrics['precision_macro']:.4f}")
             print(f"   • Recall (Macro): {self.metrics['recall_macro']:.4f}")
             print(f"   • F1-Score (Macro): {self.metrics['f1_macro']:.4f}")
-            print(f"\n🎭 Emociones detectables: {', '.join(self.emotion_names.values())}")
+            print(f"\n Emociones detectables: {', '.join(self.emotion_names.values())}")
             print(f"{'='*80}\n")
 
         except Exception as e:
-            print(f"\n❌ Error al cargar el modelo: {e}")
+            print(f"\n Error al cargar el modelo: {e}")
             sys.exit(1)
 
     def predict(self, text):
@@ -158,19 +158,19 @@ class EmotionPredictor:
             result (dict): Resultado de la predicción
         """
         if 'error' in result and result['error']:
-            print(f"\n❌ {result['error']}")
+            print(f"\n {result['error']}")
             return
 
-        print(f"\n{'─'*80}")
-        print(f"📝 Texto: \"{result['text'][:100]}{'...' if len(result['text']) > 100 else ''}\"")
-        print(f"{'─'*80}")
-        print(f"🎭 Emoción detectada: {result['emotion'].upper()}")
+        print(f"\n{''*80}")
+        print(f" Texto: \"{result['text'][:100]}{'...' if len(result['text']) > 100 else ''}\"")
+        print(f"{''*80}")
+        print(f" Emoción detectada: {result['emotion'].upper()}")
 
         if result['confidence'] is not None:
-            print(f"📊 Confianza: {result['confidence']*100:.2f}%")
+            print(f" Confianza: {result['confidence']*100:.2f}%")
 
             if result['probabilities']:
-                print(f"\n🔢 Probabilidades por emoción:")
+                print(f"\n Probabilidades por emoción:")
                 # Ordenar por probabilidad descendente
                 sorted_probs = sorted(
                     result['probabilities'].items(),
@@ -179,16 +179,16 @@ class EmotionPredictor:
                 )
                 for emotion, prob in sorted_probs:
                     bar_length = int(prob * 40)
-                    bar = '█' * bar_length + '░' * (40 - bar_length)
+                    bar = '' * bar_length + '' * (40 - bar_length)
                     marker = '←' if emotion == result['emotion'] else ''
                     print(f"   {emotion:12s} [{bar}] {prob*100:5.2f}% {marker}")
 
-        print(f"{'─'*80}\n")
+        print(f"{''*80}\n")
 
 
 def interactive_mode(predictor):
     """Modo interactivo para ingresar múltiples textos"""
-    print("\n🤖 MODO INTERACTIVO DE PREDICCIÓN DE EMOCIONES")
+    print("\n MODO INTERACTIVO DE PREDICCIÓN DE EMOCIONES")
     print("="*80)
     print("Ingresa textos en inglés para clasificar sus emociones.")
     print("Comandos especiales:")
@@ -199,14 +199,14 @@ def interactive_mode(predictor):
 
     while True:
         try:
-            text = input("\n💬 Ingresa un texto (o 'exit' para salir): ").strip()
+            text = input("\n Ingresa un texto (o 'exit' para salir): ").strip()
 
             if not text:
-                print("⚠️  Por favor ingresa un texto válido")
+                print("  Por favor ingresa un texto válido")
                 continue
 
             if text.lower() in ['exit', 'quit', 'salir', 'q']:
-                print("\n👋 ¡Hasta luego!\n")
+                print("\n ¡Hasta luego!\n")
                 break
 
             if text.lower() == 'examples':
@@ -222,10 +222,10 @@ def interactive_mode(predictor):
             predictor.print_prediction(result)
 
         except KeyboardInterrupt:
-            print("\n\n👋 Programa interrumpido. ¡Hasta luego!\n")
+            print("\n\n Programa interrumpido. ¡Hasta luego!\n")
             break
         except Exception as e:
-            print(f"\n❌ Error inesperado: {e}\n")
+            print(f"\n Error inesperado: {e}\n")
 
 
 def show_examples(predictor):
@@ -264,15 +264,15 @@ def show_examples(predictor):
     }
 
     print(f"\n{'='*80}")
-    print("📚 EJEMPLOS DE TEXTOS POR EMOCIÓN")
+    print(" EJEMPLOS DE TEXTOS POR EMOCIÓN")
     print(f"{'='*80}\n")
 
     for emotion, texts in examples.items():
-        print(f"🎭 {emotion}:")
+        print(f" {emotion}:")
         for i, text in enumerate(texts, 1):
             print(f"   {i}. \"{text}\"")
             result = predictor.predict(text)
-            correct = "✓" if result['emotion'] == emotion else "✗"
+            correct = "" if result['emotion'] == emotion else ""
             print(f"      → Predicción: {result['emotion']} {correct}")
         print()
 
@@ -280,15 +280,15 @@ def show_examples(predictor):
 def show_model_info(predictor):
     """Muestra información detallada del modelo"""
     print(f"\n{'='*80}")
-    print("📊 INFORMACIÓN DETALLADA DEL MODELO")
+    print(" INFORMACIÓN DETALLADA DEL MODELO")
     print(f"{'='*80}")
-    print(f"\n🏷️  Nombre: {predictor.model_data['model_name']}")
-    print(f"\n📈 Métricas de rendimiento:")
+    print(f"\n  Nombre: {predictor.model_data['model_name']}")
+    print(f"\n Métricas de rendimiento:")
     print(f"   • Accuracy: {predictor.metrics['accuracy']:.4f} ({predictor.metrics['accuracy']*100:.2f}%)")
     print(f"   • Precision (Macro): {predictor.metrics['precision_macro']:.4f} ({predictor.metrics['precision_macro']*100:.2f}%)")
     print(f"   • Recall (Macro): {predictor.metrics['recall_macro']:.4f} ({predictor.metrics['recall_macro']*100:.2f}%)")
     print(f"   • F1-Score (Macro): {predictor.metrics['f1_macro']:.4f} ({predictor.metrics['f1_macro']*100:.2f}%)")
-    print(f"\n🎭 Emociones detectables:")
+    print(f"\n Emociones detectables:")
     for emotion_id, emotion_name in predictor.emotion_names.items():
         print(f"   {emotion_id}: {emotion_name}")
     print(f"{'='*80}\n")
@@ -300,19 +300,19 @@ def predict_from_file(predictor, file_path):
         with open(file_path, 'r', encoding='utf-8') as f:
             texts = [line.strip() for line in f if line.strip()]
 
-        print(f"\n📁 Procesando {len(texts)} textos desde '{file_path}'...\n")
+        print(f"\n Procesando {len(texts)} textos desde '{file_path}'...\n")
 
         for i, text in enumerate(texts, 1):
             print(f"\n[{i}/{len(texts)}]")
             result = predictor.predict(text)
             predictor.print_prediction(result)
 
-        print(f"\n✅ Procesamiento completado: {len(texts)} textos clasificados.\n")
+        print(f"\n Procesamiento completado: {len(texts)} textos clasificados.\n")
 
     except FileNotFoundError:
-        print(f"\n❌ Error: No se encontró el archivo '{file_path}'\n")
+        print(f"\n Error: No se encontró el archivo '{file_path}'\n")
     except Exception as e:
-        print(f"\n❌ Error al leer el archivo: {e}\n")
+        print(f"\n Error al leer el archivo: {e}\n")
 
 
 def main():

@@ -51,7 +51,7 @@ try:
     WORDCLOUD_AVAILABLE = True
 except ImportError:
     WORDCLOUD_AVAILABLE = False
-    print("⚠️  WordCloud no está disponible. Se omitirán las nubes de palabras.")
+    print("  WordCloud no está disponible. Se omitirán las nubes de palabras.")
 
 import warnings
 warnings.filterwarnings('ignore')
@@ -185,7 +185,7 @@ if WORDCLOUD_AVAILABLE:
     plt.savefig('03_wordclouds.png', dpi=300, bbox_inches='tight')
     plt.close()
 else:
-    print("\n⚠️  Omitiendo nubes de palabras (WordCloud no disponible)")
+    print("\n  Omitiendo nubes de palabras (WordCloud no disponible)")
 
 print(f"\nEstadísticas de longitud de texto:")
 print(df['text_length'].describe())
@@ -245,8 +245,8 @@ classifiers = {
 }
 
 # FASE 1: Entrenamiento BASELINE (modelos sin optimizar)
-print("\n📊 FASE 1: Modelos Baseline (sin optimizar)")
-print("─" * 80)
+print("\n FASE 1: Modelos Baseline (sin optimizar)")
+print("" * 80)
 
 for vec_name, vectorizer in vectorizers.items():
     # Vectorizar datos
@@ -294,9 +294,9 @@ for vec_name, vectorizer in vectorizers.items():
 
 # FASE 2: MODELOS CON HIPERPARÁMETROS OPTIMIZADOS (SIMPLIFICADA)
 print("\n" + "="*80)
-print("🔧 FASE 2: Modelos con Hiperparámetros Optimizados (Versión Rápida)")
+print(" FASE 2: Modelos con Hiperparámetros Optimizados (Versión Rápida)")
 print("="*80)
-print("\n💡 Nota: Usando hiperparámetros ya optimizados para acelerar el entrenamiento")
+print("\n Nota: Usando hiperparámetros ya optimizados para acelerar el entrenamiento")
 print("   (Se omite GridSearchCV para reducir tiempo de ~40min a ~2min)\n")
 
 import time
@@ -318,16 +318,16 @@ optimized_params = {
 }
 
 for vec_name, vectorizer in vectorizers.items():
-    print(f"\n{'─'*80}")
+    print(f"\n{''*80}")
     print(f"Vectorización: {vec_name}")
-    print(f"{'─'*80}")
+    print(f"{''*80}")
 
     # Vectorizar datos
     X_train_vec = vectorizer.fit_transform(X_train)
     X_test_vec = vectorizer.transform(X_test)
 
     for clf_name in classifiers.keys():
-        print(f"\n🔍 Entrenando: {vec_name} + {clf_name} (con params optimizados)")
+        print(f"\n Entrenando: {vec_name} + {clf_name} (con params optimizados)")
 
         # Definir modelo con hiperparámetros optimizados
         if clf_name == 'Naive Bayes':
@@ -340,8 +340,8 @@ for vec_name, vectorizer in vectorizers.items():
         best_model.fit(X_train_vec, y_train)
         elapsed_time = time.time() - start_time
 
-        print(f"   ✓ Entrenamiento completado en {elapsed_time:.2f}s")
-        print(f"   ✓ Hiperparámetros usados:")
+        print(f"    Entrenamiento completado en {elapsed_time:.2f}s")
+        print(f"    Hiperparámetros usados:")
         for param, value in optimized_params[clf_name].items():
             print(f"      • {param}: {value}")
 
@@ -357,7 +357,7 @@ for vec_name, vectorizer in vectorizers.items():
         # Nombre del modelo optimizado
         model_name_opt = f"{vec_name} + {clf_name} (Optimized)"
 
-        print(f"\n   📊 Métricas en Test Set:")
+        print(f"\n    Métricas en Test Set:")
         print(f"      • Accuracy: {accuracy_opt:.4f}")
         print(f"      • Precision Macro: {precision_opt:.4f}")
         print(f"      • Recall Macro: {recall_opt:.4f}")
@@ -368,7 +368,7 @@ for vec_name, vectorizer in vectorizers.items():
         baseline_precision = results[baseline_name]['precision_macro']
         improvement = ((precision_opt - baseline_precision) / baseline_precision) * 100
 
-        print(f"\n   🚀 Mejora vs Baseline: {improvement:+.2f}%")
+        print(f"\n    Mejora vs Baseline: {improvement:+.2f}%")
 
         # Almacenar resultados
         results[model_name_opt] = {
@@ -393,20 +393,20 @@ for vec_name, vectorizer in vectorizers.items():
         }
 
 print("\n" + "="*80)
-print("✅ Entrenamiento con hiperparámetros optimizados completado")
+print(" Entrenamiento con hiperparámetros optimizados completado")
 print("="*80)
 
 #==============================================================================
 # FASE 3: BALANCEO DE CLASES CON SMOTE (SIMPLIFICADA)
 #==============================================================================
 print("\n" + "="*80)
-print("⚖️  FASE 3: Modelos con Balanceo de Clases (Versión Rápida)")
+print("  FASE 3: Modelos con Balanceo de Clases (Versión Rápida)")
 print("="*80)
-print("\n💡 Estrategia de Balanceo:")
+print("\n Estrategia de Balanceo:")
 print("   • SMOTE (Synthetic Minority Over-sampling) para Surprise y Love")
 print("   • Hiperparámetros optimizados (sin GridSearchCV para acelerar)")
 print("   • class_weight='balanced' en Logistic Regression")
-print("\n📊 Problema detectado en modelos anteriores:")
+print("\n Problema detectado en modelos anteriores:")
 print("   • Surprise: Recall bajo (37.54%)")
 print("   • Love: Recall bajo (55.13%)")
 print("   • Sesgo hacia Joy/Sadness (clases mayoritarias)\n")
@@ -418,7 +418,7 @@ for label, count in class_counts.items():
     print(f"   {emotion_names[label]:12s}: {count:6d} ({count/len(y_train)*100:5.2f}%)")
 
 # Aplicar SMOTE para balancear las clases minoritarias
-print("\n🔧 Aplicando SMOTE para balancear clases minoritarias...")
+print("\n Aplicando SMOTE para balancear clases minoritarias...")
 
 # Configurar SMOTE con estrategia custom
 # Solo sobremuestrear clases con menos del 15% de la mayoría
@@ -453,9 +453,9 @@ balanced_params = {
 balanced_results = {}
 
 for vec_name, vectorizer in vectorizers.items():
-    print(f"\n{'─'*80}")
+    print(f"\n{''*80}")
     print(f"Vectorización: {vec_name}")
-    print(f"{'─'*80}")
+    print(f"{''*80}")
 
     # Vectorizar datos
     X_train_vec = vectorizer.fit_transform(X_train)
@@ -465,14 +465,14 @@ for vec_name, vectorizer in vectorizers.items():
     smote = SMOTE(sampling_strategy=sampling_strategy, random_state=42, k_neighbors=5)
     X_train_balanced, y_train_balanced = smote.fit_resample(X_train_vec, y_train)
 
-    print(f"\n✓ SMOTE aplicado. Nueva distribución:")
+    print(f"\n SMOTE aplicado. Nueva distribución:")
     balanced_counts = pd.Series(y_train_balanced).value_counts().sort_index()
     for label, count in balanced_counts.items():
         diff = count - class_counts.get(label, 0)
         print(f"   {emotion_names[label]:12s}: {count:6d} (+{diff:5d})")
 
     for clf_name in classifiers.keys():
-        print(f"\n🔍 Entrenando (Balanceado): {vec_name} + {clf_name}")
+        print(f"\n Entrenando (Balanceado): {vec_name} + {clf_name}")
 
         # Definir modelo con hiperparámetros optimizados
         if clf_name == 'Naive Bayes':
@@ -487,8 +487,8 @@ for vec_name, vectorizer in vectorizers.items():
 
         best_params = balanced_params[clf_name]
 
-        print(f"\n   ✓ Entrenamiento completado en {elapsed_time:.2f}s")
-        print(f"   ✓ Hiperparámetros usados:")
+        print(f"\n    Entrenamiento completado en {elapsed_time:.2f}s")
+        print(f"    Hiperparámetros usados:")
         for param, value in best_params.items():
             print(f"      • {param}: {value}")
 
@@ -504,7 +504,7 @@ for vec_name, vectorizer in vectorizers.items():
         # Nombre del modelo balanceado
         model_name_bal = f"{vec_name} + {clf_name} (Balanced)"
 
-        print(f"\n   📊 Métricas en Test Set:")
+        print(f"\n    Métricas en Test Set:")
         print(f"      • Accuracy: {accuracy_bal:.4f}")
         print(f"      • Precision Macro: {precision_bal:.4f}")
         print(f"      • Recall Macro: {recall_bal:.4f}")
@@ -518,7 +518,7 @@ for vec_name, vectorizer in vectorizers.items():
             recall_improvement = ((recall_bal - old_recall) / old_recall) * 100
             f1_improvement = ((f1_bal - old_f1) / old_f1) * 100
 
-            print(f"\n   🚀 Mejora vs Optimized (sin balanceo):")
+            print(f"\n    Mejora vs Optimized (sin balanceo):")
             print(f"      • Recall: {recall_improvement:+.2f}%")
             print(f"      • F1-Score: {f1_improvement:+.2f}%")
 
@@ -546,16 +546,16 @@ for vec_name, vectorizer in vectorizers.items():
         }
 
 print("\n" + "="*80)
-print("✅ Entrenamiento con balanceo de clases completado")
+print(" Entrenamiento con balanceo de clases completado")
 print("="*80)
 
 #==============================================================================
 # FASE 4: ENSEMBLE CON FEATURE ENGINEERING
 #==============================================================================
 print("\n" + "="*80)
-print("🎯 FASE 4: Ensemble de Modelos + Feature Engineering")
+print(" FASE 4: Ensemble de Modelos + Feature Engineering")
 print("="*80)
-print("\n💡 Estrategia de Ensemble:")
+print("\n Estrategia de Ensemble:")
 print("   • Combinar TF-IDF + BoW + Features adicionales")
 print("   • Voting Classifier con 3 modelos (Naive Bayes + LogReg + SGD)")
 print("   • Pesos basados en F1-Score individual")
@@ -563,7 +563,7 @@ print("   • Calibración de probabilidades para mejor confianza\n")
 
 # Seleccionar los 3 mejores modelos para el ensemble
 # Basándonos en los resultados balanceados
-print("📊 Seleccionando modelos para ensemble...")
+print(" Seleccionando modelos para ensemble...")
 
 # Crear extractores de features combinados
 text_feature_extractor = TextFeatureExtractor()
@@ -572,9 +572,9 @@ text_feature_extractor = TextFeatureExtractor()
 ensemble_results = {}
 
 for vec_name in ['TF-IDF']:  # Solo TF-IDF para el ensemble final (el mejor)
-    print(f"\n{'─'*80}")
+    print(f"\n{''*80}")
     print(f"Creando Ensemble con {vec_name}")
-    print(f"{'─'*80}")
+    print(f"{''*80}")
 
     if vec_name == 'BoW':
         vectorizer = CountVectorizer(
@@ -599,7 +599,7 @@ for vec_name in ['TF-IDF']:  # Solo TF-IDF para el ensemble final (el mejor)
     ])
 
     # Vectorizar datos con features combinadas
-    print("\n🔧 Combinando TF-IDF/BoW con features adicionales...")
+    print("\n Combinando TF-IDF/BoW con features adicionales...")
     X_train_combined = combined_features.fit_transform(X_train)
     X_test_combined = combined_features.transform(X_test)
 
@@ -607,12 +607,12 @@ for vec_name in ['TF-IDF']:  # Solo TF-IDF para el ensemble final (el mejor)
     smote = SMOTE(sampling_strategy=sampling_strategy, random_state=42, k_neighbors=5)
     X_train_ensemble, y_train_ensemble = smote.fit_resample(X_train_combined, y_train)
 
-    print(f"✓ Features combinadas: {X_train_combined.shape[1]} features totales")
+    print(f" Features combinadas: {X_train_combined.shape[1]} features totales")
     print(f"   • Texto (TF-IDF/BoW): ~5000 features")
     print(f"   • Adicionales: 18 features")
 
     # Entrenar modelos individuales para el ensemble
-    print("\n📦 Entrenando modelos individuales para ensemble...")
+    print("\n Entrenando modelos individuales para ensemble...")
 
     # Modelo 1: Naive Bayes
     print("   1. Naive Bayes...")
@@ -644,7 +644,7 @@ for vec_name in ['TF-IDF']:  # Solo TF-IDF para el ensemble final (el mejor)
     svm_model.fit(X_train_ensemble, y_train_ensemble)
 
     # Evaluar modelos individuales para determinar pesos
-    print("\n📊 Evaluando modelos individuales...")
+    print("\n Evaluando modelos individuales...")
     individual_scores = {}
 
     for name, model in [('NB', nb_model), ('LR', lr_model), ('SGD', svm_model)]:
@@ -659,13 +659,13 @@ for vec_name in ['TF-IDF']:  # Solo TF-IDF para el ensemble final (el mejor)
                individual_scores['LR'] / total_score,
                individual_scores['SGD'] / total_score]
 
-    print(f"\n⚖️  Pesos calculados:")
+    print(f"\n  Pesos calculados:")
     print(f"   • Naive Bayes: {weights[0]:.3f}")
     print(f"   • Log Regression: {weights[1]:.3f}")
     print(f"   • SGD Classifier: {weights[2]:.3f}")
 
     # Crear Voting Classifier (versión optimizada)
-    print("\n🎯 Creando Ensemble con Voting Ponderado...")
+    print("\n Creando Ensemble con Voting Ponderado...")
     print("   ⏩ Usando modelos pre-entrenados (sin re-entrenamiento)...")
 
     # Obtener probabilidades de cada modelo (soft voting manual)
@@ -682,7 +682,7 @@ for vec_name in ['TF-IDF']:  # Solo TF-IDF para el ensemble final (el mejor)
     y_pred_ensemble = np.argmax(weighted_proba, axis=1)
 
     # Evaluar ensemble
-    print("\n🧪 Evaluando modelo ensemble...")
+    print("\n Evaluando modelo ensemble...")
 
     # Calcular métricas
     accuracy_ens = accuracy_score(y_test, y_pred_ensemble)
@@ -692,7 +692,7 @@ for vec_name in ['TF-IDF']:  # Solo TF-IDF para el ensemble final (el mejor)
 
     ensemble_name = f"{vec_name} + Ensemble (NB+LR+SGD)"
 
-    print(f"\n   📊 Métricas del Ensemble:")
+    print(f"\n    Métricas del Ensemble:")
     print(f"      • Accuracy: {accuracy_ens:.4f}")
     print(f"      • Precision Macro: {precision_ens:.4f}")
     print(f"      • Recall Macro: {recall_ens:.4f}")
@@ -702,7 +702,7 @@ for vec_name in ['TF-IDF']:  # Solo TF-IDF para el ensemble final (el mejor)
     best_balanced_f1 = max([r['f1_macro'] for r in results.values()])
     improvement_ens = ((f1_ens - best_balanced_f1) / best_balanced_f1) * 100
 
-    print(f"\n   🚀 Mejora vs Mejor Modelo Balanceado: {improvement_ens:+.2f}%")
+    print(f"\n    Mejora vs Mejor Modelo Balanceado: {improvement_ens:+.2f}%")
 
     # Almacenar resultados
     results[ensemble_name] = {
@@ -738,7 +738,7 @@ for vec_name in ['TF-IDF']:  # Solo TF-IDF para el ensemble final (el mejor)
     }
 
 print("\n" + "="*80)
-print("✅ Ensemble con Feature Engineering completado")
+print(" Ensemble con Feature Engineering completado")
 print("="*80)
 
 #==============================================================================
@@ -816,18 +816,18 @@ best_precision = results_df.loc[results_df['Modelo'] == best_model_name, 'Precis
 best_recall = results_df.loc[results_df['Modelo'] == best_model_name, 'Recall (Macro)'].values[0]
 
 print("\n" + "="*80)
-print(f"🏆 MEJOR MODELO GLOBAL (por F1-Score): {best_model_name}")
+print(f" MEJOR MODELO GLOBAL (por F1-Score): {best_model_name}")
 print(f"   F1-Score Macro: {best_f1:.4f} ({best_f1*100:.2f}%)")
 print(f"   Precision Macro: {best_precision:.4f} ({best_precision*100:.2f}%)")
 print(f"   Recall Macro: {best_recall:.4f} ({best_recall*100:.2f}%)")
 
 # Verificar si cumple objetivo O2
 objetivo_cumplido = best_precision >= 0.80
-print(f"\n{'✅' if objetivo_cumplido else '❌'} Objetivo O2 (≥80% precision macro): {'CUMPLIDO' if objetivo_cumplido else 'NO CUMPLIDO'}")
+print(f"\n{'' if objetivo_cumplido else ''} Objetivo O2 (≥80% precision macro): {'CUMPLIDO' if objetivo_cumplido else 'NO CUMPLIDO'}")
 
 # Mostrar hiperparámetros del mejor modelo
 if results[best_model_name]['optimized']:
-    print(f"\n🔧 Mejores Hiperparámetros encontrados:")
+    print(f"\n Mejores Hiperparámetros encontrados:")
     for param, value in results[best_model_name]['best_params'].items():
         print(f"   • {param}: {value}")
 
@@ -1024,27 +1024,27 @@ print("\n" + "="*80)
 print("RESUMEN FINAL DEL PROYECTO")
 print("="*80)
 
-print(f"\n📊 Modelos Evaluados: {len(results)} ({len(baseline_df)} baseline + {len(optimized_df)} optimizados + {len(balanced_df)} balanceados + {len(ensemble_df)} ensemble)")
+print(f"\n Modelos Evaluados: {len(results)} ({len(baseline_df)} baseline + {len(optimized_df)} optimizados + {len(balanced_df)} balanceados + {len(ensemble_df)} ensemble)")
 print(f"   • Técnicas de vectorización: Bag-of-Words (BoW) y TF-IDF")
 print(f"   • Clasificadores: Naive Bayes, Regresión Logística y SVM")
 print(f"   • Optimización: GridSearchCV con validación cruzada 5-fold")
 print(f"   • Balanceo: SMOTE + class_weight='balanced' (Fase 3)")
 print(f"   • Ensemble: Feature Engineering + Voting Classifier (Fase 4)")
 
-print(f"\n🏆 Mejor Modelo Global: {best_model_name}")
+print(f"\n Mejor Modelo Global: {best_model_name}")
 print(f"   • Accuracy: {results[best_model_name]['accuracy']:.4f}")
 print(f"   • Precision (Macro): {results[best_model_name]['precision_macro']:.4f}")
 print(f"   • Recall (Macro): {results[best_model_name]['recall_macro']:.4f}")
 print(f"   • F1-Score (Macro): {results[best_model_name]['f1_macro']:.4f}")
 
 if results[best_model_name]['optimized']:
-    print(f"\n🔧 Hiperparámetros Óptimos del Mejor Modelo:")
+    print(f"\n Hiperparámetros Óptimos del Mejor Modelo:")
     for param, value in results[best_model_name]['best_params'].items():
         print(f"   • {param}: {value}")
     print(f"   • Tiempo de optimización: {results[best_model_name]['training_time']:.2f}s")
 
 # Comparación de mejoras
-print(f"\n📈 Impacto de la Optimización de Hiperparámetros:")
+print(f"\n Impacto de la Optimización de Hiperparámetros:")
 avg_all_improvements = sum(avg_improvement.values()) / len(avg_improvement)
 print(f"   • Mejora promedio en precision_macro: {avg_all_improvements:+.2f}%")
 max_improvement = max(avg_improvement.items(), key=lambda x: x[1])
@@ -1054,7 +1054,7 @@ print(f"   • Mayor mejora: {max_improvement[0]} ({max_improvement[1]:+.2f}%)")
 best_baseline = baseline_df.loc[baseline_df['F1-Score (Macro)'].idxmax()]
 best_optimized = optimized_df.loc[optimized_df['F1-Score (Macro)'].idxmax()]
 
-print(f"\n🔄 Comparación: Evolución de los Modelos")
+print(f"\n Comparación: Evolución de los Modelos")
 print(f"   • Mejor Baseline: {best_baseline['Modelo']}")
 print(f"     - Precision: {best_baseline['Precision (Macro)']:.4f} | Recall: {best_baseline['Recall (Macro)']:.4f} | F1: {best_baseline['F1-Score (Macro)']:.4f}")
 print(f"   • Mejor Optimizado: {best_optimized['Modelo']}")
@@ -1070,7 +1070,7 @@ if len(balanced_df) > 0:
     improvement_bal = ((best_balanced['F1-Score (Macro)'] - best_optimized['F1-Score (Macro)']) / best_optimized['F1-Score (Macro)']) * 100
     improvement_total = ((best_balanced['F1-Score (Macro)'] - best_baseline['F1-Score (Macro)']) / best_baseline['F1-Score (Macro)']) * 100
 
-    print(f"\n   📈 Mejoras:")
+    print(f"\n    Mejoras:")
     print(f"     - Baseline → Optimizado: {improvement_opt:+.2f}% en F1")
     print(f"     - Optimizado → Balanceado: {improvement_bal:+.2f}% en F1")
     print(f"     - Mejora Total (Baseline → Balanceado): {improvement_total:+.2f}% en F1")
@@ -1078,13 +1078,13 @@ else:
     improvement_best = ((best_optimized['F1-Score (Macro)'] - best_baseline['F1-Score (Macro)']) / best_baseline['F1-Score (Macro)']) * 100
     print(f"   • Mejora (Baseline → Optimizado): {improvement_best:+.2f}% en F1")
 
-print(f"\n✅ Objetivos SMART:")
-print(f"   [✓] O1: Implementar modelos con BoW, TF-IDF, Naive Bayes y Regresión Logística")
-print(f"   [✓] O2 (Parte 1): Optimizar hiperparámetros con GridSearchCV")
-print(f"   [{'✓' if objetivo_cumplido else '✗'}] O2 (Parte 2): Alcanzar ≥80% precision macro - {'CUMPLIDO' if objetivo_cumplido else 'NO CUMPLIDO'}")
-print(f"   [✓] O2 (Parte 3): Reportar recall, F1 por clase y matrices de confusión")
+print(f"\n Objetivos SMART:")
+print(f"   [] O1: Implementar modelos con BoW, TF-IDF, Naive Bayes y Regresión Logística")
+print(f"   [] O2 (Parte 1): Optimizar hiperparámetros con GridSearchCV")
+print(f"   [{'' if objetivo_cumplido else ''}] O2 (Parte 2): Alcanzar ≥80% precision macro - {'CUMPLIDO' if objetivo_cumplido else 'NO CUMPLIDO'}")
+print(f"   [] O2 (Parte 3): Reportar recall, F1 por clase y matrices de confusión")
 
-print(f"\n📁 Archivos generados:")
+print(f"\n Archivos generados:")
 print(f"   • 01_emotion_distribution.png")
 print(f"   • 02_text_length_analysis.png")
 if WORDCLOUD_AVAILABLE:
@@ -1095,9 +1095,9 @@ print(f"   • 05_confusion_matrices.png")
 print(f"   • 06_best_model_metrics_by_class.png")
 
 print("\n" + "="*80)
-print("✅ ANÁLISIS COMPLETADO CON OPTIMIZACIÓN Y BALANCEO DE CLASES")
+print(" ANÁLISIS COMPLETADO CON OPTIMIZACIÓN Y BALANCEO DE CLASES")
 print("="*80)
-print(f"\n💡 Conclusión:")
+print(f"\n Conclusión:")
 print(f"   • La optimización de hiperparámetros mediante GridSearchCV ha mejorado los modelos")
 print(f"   • El balanceo de clases con SMOTE + class_weight ha mejorado el recall en clases minoritarias")
 print(f"   • El mejor modelo {'cumple' if objetivo_cumplido else 'se acerca al cumplimiento del'} objetivo O2 con {best_precision:.4f} ({best_precision*100:.2f}%) de precision macro")
@@ -1134,8 +1134,8 @@ else:
 model_filename = 'best_emotion_model.pkl'
 joblib.dump(best_model_data, model_filename)
 
-print(f"\n✅ Modelo guardado exitosamente en: {model_filename}")
+print(f"\n Modelo guardado exitosamente en: {model_filename}")
 print(f"   • Modelo: {best_model_name}")
 print(f"   • Precision Macro: {best_precision:.4f}")
-print(f"\n📌 Usa 'python predict.py' para hacer predicciones en nuevos textos")
+print(f"\n Usa 'python predict.py' para hacer predicciones en nuevos textos")
 print("\n" + "="*80 + "\n")
