@@ -41,11 +41,6 @@ wheels/
 *.h5
 *.joblib
 
-# Imágenes generadas
-*.png
-*.jpg
-*.jpeg
-
 # Jupyter Notebook
 .ipynb_checkpoints
 
