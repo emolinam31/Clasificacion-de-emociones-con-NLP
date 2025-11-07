@@ -1,14 +1,8 @@
 """
 Clasificación de Emociones en Texto usando Técnicas Clásicas de NLP
 =====================================================================
-Trabajo Final - Inteligencia Artificial 2025-2
-Universidad EAFIT
-Autores: Miguel Villegas y Esteban Molina
-
-Objetivos SMART:
-O1: Implementar modelos con TF-IDF y BoW combinados con Naive Bayes y Regresión Logística
-O2: Optimizar hiperparámetros y alcanzar ≥80% de precision macro en el conjunto de prueba,
-    reportando recall, F1 por clase y matrices de confusión
+Trabajo Final - Inteligencia Artificial
+Por: Miguel Villegas y Esteban Molina
 
 Metodología:
 - FASE 1: Entrenamiento de modelos baseline (4 combinaciones)

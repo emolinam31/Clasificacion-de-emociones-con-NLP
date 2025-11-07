@@ -1,11 +1,5 @@
 """
-Script de Predicción de Emociones
-==================================
-Proyecto Final - Inteligencia Artificial 2025-2
-Universidad EAFIT
-Autores: Miguel Villegas y Esteban Molina
-
-Este script carga el modelo entrenado y permite clasificar emociones en textos en inglés.
+Este archivo carga el modelo entrenado y permite clasificar emociones en textos en inglés.
 
 Uso:
     # Modo interactivo
