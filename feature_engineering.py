@@ -1,9 +1,8 @@
 """
 Feature Engineering para Clasificación de Emociones
 ===================================================
-Proyecto Final - Inteligencia Artificial 2025-2
-Universidad EAFIT
-Autores: Miguel Villegas y Esteban Molina
+Proyecto Final - Inteligencia Artificial 
+Por: Miguel Villegas y Esteban Molina
 
 Este módulo contiene extractores de features adicionales para mejorar
 la clasificación de emociones en textos cortos y ambiguos.
