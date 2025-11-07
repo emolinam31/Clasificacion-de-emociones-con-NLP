@@ -118,6 +118,9 @@ python test_model.py
 - El extractor de features adicionales usa listas de palabras emocionales curadas; puede sesgarse con jerga no contemplada.
 - El sistema no realiza desambiguación semántica profunda; textos irónicos, figurativos o muy cortos pueden ser ambiguos.
 
+## Video demostración:
+Link: https://youtu.be/j9ts7MZ5GtI?si=SXrq6qdnVzmq7Jfc
+
 ## Autores
 - Miguel Villegas
 - Esteban Molina
